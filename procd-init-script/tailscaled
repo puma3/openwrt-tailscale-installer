@@ -29,6 +29,8 @@ boot() {
 start_service() {
     if [ $("${tsd_init}" enabled; printf "%u" ${?}) -eq 0 ]
     then
+        /usr/sbin/${name} --cleanup
+
         if is_running; then
             echo "Already started"
         else
@@ -41,9 +43,6 @@ start_service() {
 
             procd_set_param term_timeout 60
             procd_close_instance
-
-            sleep 2
-            /usr/sbin/tailscale up
         fi
     fi
 }

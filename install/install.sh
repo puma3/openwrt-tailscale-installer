@@ -8,4 +8,4 @@ curl -o /etc/init.d/tailscaled -L https://raw.githubusercontent.com/puma3/openwr
 chmod +x /etc/init.d/tailscaled
 /etc/init.d/tailscaled enable
 /etc/init.d/tailscaled start
-tailscale up --advertise-exit-node
+tailscale up --netfilter-mode=off --advertise-exit-node
