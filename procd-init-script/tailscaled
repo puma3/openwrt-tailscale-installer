@@ -7,7 +7,7 @@ STOP=01
 name=tailscaled
 pid_file="/var/run/$name.pid"
 tsd_init="/etc/init.d/$name"
-state="/var/lib/tailscale/$name.state"
+state="/etc/tailscale/$name.state"
 stdout_log="/var/log/$name.log"
 stderr_log="/var/log/$name.err"
 
@@ -41,11 +41,15 @@ start_service() {
 
             procd_set_param term_timeout 60
             procd_close_instance
+
+            sleep 2
+            /usr/sbin/tailscale up
         fi
     fi
 }
 
 stop_service() {
+    /usr/sbin/${name} --cleanup
     if is_running; then
         echo -n "Stopping $name.."
         kill $(get_pid)
